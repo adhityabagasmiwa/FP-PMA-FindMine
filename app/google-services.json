@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "749421517179",
+    "firebase_url": "https://findmine-17e79.firebaseio.com",
+    "project_id": "findmine-17e79",
+    "storage_bucket": "findmine-17e79.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:749421517179:android:6c27b173894d12fbcd85de",
+        "android_client_info": {
+          "package_name": "com.planhub.findmine"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "749421517179-1a8i3gj62c247buavnmpja01632j95v2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.planhub.findmine",
+            "certificate_hash": "265f8919886bb0ad774db018745cc312eb2c2700"
+          }
+        },
+        {
+          "client_id": "749421517179-n5itj9vmn4jadnkdeasrkame57m8io8p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDOTiBKbRmfuKE2pEIrp5M5PpQNHArmFGc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "749421517179-n5itj9vmn4jadnkdeasrkame57m8io8p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

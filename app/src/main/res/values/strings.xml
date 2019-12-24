@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">FindMine</string>
+    <string name="logologin">LogoLogin</string>
+    <string name="emailHint">Your Email</string>
+    <string name="passHint">Password</string>
+    <string name="buttonLogin">Masuk</string>
 </resources>
