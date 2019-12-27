@@ -4,24 +4,26 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private TextInputLayout edtEmail;
-    private TextInputLayout edtPass;
+    private EditText edtEmail;
+    private EditText edtPass;
     private Button btnLogin;
     private ProgressBar progressBarLogin;
 
@@ -37,6 +39,8 @@ public class LoginActivity extends AppCompatActivity {
 
         edtEmail = findViewById(R.id.edtEmail);
         edtPass = findViewById(R.id.edtPassword);
+        edtPass.setTransformationMethod(new PasswordTransformationMethod());
+        /*edtPass.setTypeface(Typeface.createFromAsset(getAssets(),"font/poppins_mlight.otf"));*/
         btnLogin = findViewById(R.id.btnLogin);
         progressBarLogin = findViewById(R.id.progressLogin);
 
@@ -44,8 +48,8 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                String loginEmail = edtEmail.getEditText().getText().toString().trim();
-                String loginPass = edtPass.getEditText().getText().toString().trim();
+                String loginEmail = edtEmail.getText().toString();
+                String loginPass = edtPass.getText().toString();
 
                 //Fungsi login
                 if (!TextUtils.isEmpty(loginEmail) && !TextUtils.isEmpty(loginPass)) {
@@ -89,9 +93,7 @@ public class LoginActivity extends AppCompatActivity {
             //User login
             doSendMainActivity();
 
-        } /*else {
-            //User tidak login
-        }*/
+        }
     }
 
 
@@ -99,6 +101,7 @@ public class LoginActivity extends AppCompatActivity {
     private void doSendMainActivity() {
         Intent loginIntent = new Intent(LoginActivity.this, MainActivity.class);
         startActivity(loginIntent);
+        Toast.makeText(LoginActivity.this, "Behasil Login", Toast.LENGTH_LONG).show();
         finish();
     }
 }

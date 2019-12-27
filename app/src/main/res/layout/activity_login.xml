@@ -8,16 +8,16 @@
 
     <ImageView
         android:id="@+id/imgLogo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="225dp"
+        android:layout_height="134dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="128dp"
+        android:layout_marginTop="100dp"
         android:layout_marginEnd="8dp"
         android:contentDescription="@string/logologin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/logo_findmine_2019" />
+        app:srcCompat="@drawable/logo_findmine_v2" />
 
     <!--<EditText
         android:id="@+id/edtEmail"
@@ -34,9 +34,9 @@
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imgLogo" />-->
+        app:layout_constraintTop_toBottomOf="@+id/imgLogo" />
 
-    <!--<EditText
+    <EditText
         android:id="@+id/edtPassword"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -54,13 +54,14 @@
         app:layout_constraintTop_toBottomOf="@+id/edtEmail" />-->
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/edtEmail"
+        android:id="@+id/layoutEmail"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="100dp"
         android:layout_marginEnd="16dp"
         android:ems="10"
+        android:hint="@string/emailHint"
         android:padding="4dp"
         android:textColor="@color/colorTextBlack"
         android:textSize="18sp"
@@ -70,34 +71,36 @@
         app:layout_constraintTop_toBottomOf="@+id/imgLogo">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edtEmail"
+            android:fontFamily="@font/poppins_mlight"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/emailHint"
             android:inputType="textEmailAddress" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/edtPassword"
+        android:id="@+id/layoutPassword"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:ems="10"
+        android:hint="@string/passHint"
         android:padding="4dp"
         android:textColor="@color/colorTextBlack"
         android:textSize="18sp"
         app:errorEnabled="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edtEmail"
+        app:layout_constraintTop_toBottomOf="@+id/layoutEmail"
         app:passwordToggleEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edtPassword"
+            android:fontFamily="@font/poppins_mlight"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/passHint"
-            android:inputType="textPassword" />
+            android:layout_height="wrap_content" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -108,16 +111,15 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="16dp"
-        android:background="@drawable/btn_rounded"
-        android:paddingTop="14dp"
-        android:paddingBottom="14dp"
+        android:background="@drawable/btn_start"
+        android:fontFamily="@font/poppins_mbold"
         android:text="@string/buttonLogin"
         android:textAllCaps="true"
         android:textColor="@color/colorTextWhite"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edtPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/layoutPassword" />
 
     <ProgressBar
         android:id="@+id/progressLogin"

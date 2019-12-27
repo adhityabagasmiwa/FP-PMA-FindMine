@@ -7,4 +7,11 @@
     <color name="colorTextWhite">#FFFFFF</color>
     <color name="colorTextBlack">#000000</color>
     <color name="colorTextHint">#80FFFFFF</color>
+
+    <!-- Color untuk intro screen -->
+    <color name="gradient_start">#9C27B0</color>
+    <color name="gradient_end">#DE41F8</color>
+    <color name="colorDesc">#8B8A8B</color>
+    <color name="tab_indicator_gray">#c0c0c0</color>
+
 </resources>
