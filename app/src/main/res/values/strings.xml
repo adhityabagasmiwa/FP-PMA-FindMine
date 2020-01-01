@@ -3,5 +3,8 @@
     <string name="logologin">LogoLogin</string>
     <string name="emailHint">Your Email</string>
     <string name="passHint">Password</string>
-    <string name="buttonLogin">Masuk</string>
+    <string name="buttonLogin">Login</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

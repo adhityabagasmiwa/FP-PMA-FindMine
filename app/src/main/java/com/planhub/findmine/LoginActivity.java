@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.text.method.PasswordTransformationMethod;
@@ -12,10 +11,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -24,6 +25,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private EditText edtEmail;
     private EditText edtPass;
+    private TextView tvRegist;
     private Button btnLogin;
     private ProgressBar progressBarLogin;
 
@@ -38,15 +40,17 @@ public class LoginActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         edtEmail = findViewById(R.id.edtEmail);
+        tvRegist = findViewById(R.id.tvRegist);
         edtPass = findViewById(R.id.edtPassword);
         edtPass.setTransformationMethod(new PasswordTransformationMethod());
-        /*edtPass.setTypeface(Typeface.createFromAsset(getAssets(),"font/poppins_mlight.otf"));*/
+
         btnLogin = findViewById(R.id.btnLogin);
         progressBarLogin = findViewById(R.id.progressLogin);
 
+        // perintah button login
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(final View v) {
 
                 String loginEmail = edtEmail.getText().toString();
                 String loginPass = edtPass.getText().toString();
@@ -68,8 +72,11 @@ public class LoginActivity extends AppCompatActivity {
                                 doSendMainActivity();
 
                             } else {
+
                                 String errorMessage = task.getException().getMessage();
-                                Toast.makeText(LoginActivity.this, "Error : " + errorMessage, Toast.LENGTH_LONG).show();
+                                Snackbar.make(v, "Upss, " + errorMessage , Snackbar.LENGTH_SHORT).show();
+                                /*Toast.makeText(LoginActivity.this, "Error : " + errorMessage, Toast.LENGTH_LONG).show();*/
+
                             }
 
                             progressBarLogin.setVisibility(View.INVISIBLE);
@@ -79,6 +86,17 @@ public class LoginActivity extends AppCompatActivity {
                     });
 
                 }
+            }
+        });
+
+        // Intent ke register
+        tvRegist.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+                startActivity(intent);
+
             }
         });
     }

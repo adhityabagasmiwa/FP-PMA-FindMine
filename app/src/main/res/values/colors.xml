@@ -7,6 +7,8 @@
     <color name="colorTextWhite">#FFFFFF</color>
     <color name="colorTextBlack">#000000</color>
     <color name="colorTextHint">#80FFFFFF</color>
+    <color name="colorTextPlaceholder">#4D7E7E7E</color>
+    <color name="colorDarkGrey">#202020</color>
 
     <!-- Color untuk intro screen -->
     <color name="gradient_start">#9C27B0</color>

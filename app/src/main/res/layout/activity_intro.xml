@@ -15,7 +15,7 @@
         app:layout_constraintBottom_toTopOf="@+id/tabIndicator"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" >
+        app:layout_constraintTop_toTopOf="parent">
 
     </androidx.viewpager.widget.ViewPager>
 
@@ -34,24 +34,24 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <com.google.android.material.tabs.TabLayout
-        app:tabBackground="@drawable/indicator_selector"
         android:id="@+id/tabIndicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:tabBackground="@drawable/indicator_selector">
 
     </com.google.android.material.tabs.TabLayout>
 
     <Button
         android:id="@+id/btnPindah"
-        android:fontFamily="@font/poppins_mbold"
         android:layout_width="130dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:background="@drawable/btn_start"
+        android:fontFamily="@font/poppins_mbold"
         android:text="Mulai"
         android:textColor="@color/colorTextWhite"
         android:visibility="invisible"
