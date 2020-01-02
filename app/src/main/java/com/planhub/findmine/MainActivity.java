@@ -3,6 +3,7 @@ package com.planhub.findmine;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,7 +23,7 @@ import com.planhub.findmine.Fragment.ProfileFragment;
 public class MainActivity extends AppCompatActivity {
 
     private BottomNavigationView bottomNavigationView;
-    private Fragment bottomFragment;
+    private Fragment homeFragment, postFragment, profileFragment;
 
     private FirebaseAuth mAuth;
     private FirebaseFirestore firebaseFirestore;
@@ -38,14 +39,47 @@ public class MainActivity extends AppCompatActivity {
         firebaseFirestore = FirebaseFirestore.getInstance();
 
         bottomNavigationView = findViewById(R.id.bottomNav);
-        bottomNavigationView.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout,
-                new HomeFragment()).commit();
+        // Fragment
+        homeFragment = new HomeFragment();
+        profileFragment = new ProfileFragment();
+
+        replaceFragment(homeFragment);
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+
+                /*Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.frameLayout);*/
+                switch (menuItem.getItemId()) {
+
+                    case R.id.nav_home:
+                        replaceFragment(homeFragment);
+                        return true;
+
+                    case R.id.nav_post:
+                        postFragment = null;
+                        startActivity(new Intent(MainActivity.this, PostActivity.class));
+                        return true;
+
+                    case R.id.nav_profile:
+                        /*SharedPreferences.Editor editor = getSharedPreferences("prefs", MODE_PRIVATE).edit();
+                        editor.putString("profileid", FirebaseAuth.getInstance().getCurrentUser().getUid());
+                        editor.apply();*/
+                        replaceFragment(profileFragment);
+                        startActivity(new Intent(MainActivity.this, SetupProfileActivity.class));
+                        return true;
+
+                    default:
+                        return false;
+
+                }
+            }
+        });
 
     }
 
-    private BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener =
+    /*private BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener =
             new BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -61,9 +95,9 @@ public class MainActivity extends AppCompatActivity {
                             break;
 
                         case R.id.nav_profile:
-                            /*SharedPreferences.Editor editor = getSharedPreferences("prefs", MODE_PRIVATE).edit();
+                            *//*SharedPreferences.Editor editor = getSharedPreferences("prefs", MODE_PRIVATE).edit();
                             editor.putString("profileid", FirebaseAuth.getInstance().getCurrentUser().getUid());
-                            editor.apply();*/
+                            editor.apply();*//*
                             startActivity(new Intent(MainActivity.this, SetupProfileActivity.class));
                             bottomFragment = new ProfileFragment();
                             break;
@@ -78,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
 
                     return true;
                 }
-            };
+            };*/
 
     @Override
     protected void onStart() {
@@ -121,4 +155,13 @@ public class MainActivity extends AppCompatActivity {
 
         }
     }
+
+    private void replaceFragment(Fragment fragment) {
+
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.frameLayout, fragment);
+        fragmentTransaction.commit();
+
+    }
+
 }
