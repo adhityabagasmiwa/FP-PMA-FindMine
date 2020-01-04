@@ -19,11 +19,12 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.planhub.findmine.Fragment.HomeFragment;
 import com.planhub.findmine.Fragment.ProfileFragment;
+import com.planhub.findmine.Fragment.SearchFragment;
 
 public class MainActivity extends AppCompatActivity {
 
     private BottomNavigationView bottomNavigationView;
-    private Fragment homeFragment, postFragment, profileFragment;
+    private Fragment homeFragment, searchFragment, profileFragment, postFragment;
 
     private FirebaseAuth mAuth;
     private FirebaseFirestore firebaseFirestore;
@@ -38,44 +39,52 @@ public class MainActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         firebaseFirestore = FirebaseFirestore.getInstance();
 
-        bottomNavigationView = findViewById(R.id.bottomNav);
+        if (mAuth.getCurrentUser() != null) {
 
-        // Fragment
-        homeFragment = new HomeFragment();
-        profileFragment = new ProfileFragment();
+            bottomNavigationView = findViewById(R.id.bottomNav);
 
-        replaceFragment(homeFragment);
+            // Fragment
+            homeFragment = new HomeFragment();
+            profileFragment = new ProfileFragment();
+            searchFragment = new SearchFragment();
 
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+            replaceFragment(homeFragment);
 
-                /*Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.frameLayout);*/
-                switch (menuItem.getItemId()) {
+            bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
-                    case R.id.nav_home:
-                        replaceFragment(homeFragment);
-                        return true;
+                    /*Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.frameLayout);*/
+                    switch (menuItem.getItemId()) {
 
-                    case R.id.nav_post:
-                        postFragment = null;
-                        startActivity(new Intent(MainActivity.this, PostActivity.class));
-                        return true;
+                        case R.id.nav_home:
+                            replaceFragment(homeFragment);
+                            return true;
 
-                    case R.id.nav_profile:
+                        case R.id.nav_search:
+                            replaceFragment(searchFragment);
+                            return true;
+
+                        case R.id.nav_post:
+                            postFragment = null;
+                            startActivity(new Intent(MainActivity.this, PostActivity.class));
+                            return true;
+
+                        case R.id.nav_profile:
                         /*SharedPreferences.Editor editor = getSharedPreferences("prefs", MODE_PRIVATE).edit();
                         editor.putString("profileid", FirebaseAuth.getInstance().getCurrentUser().getUid());
                         editor.apply();*/
-                        replaceFragment(profileFragment);
-                        startActivity(new Intent(MainActivity.this, SetupProfileActivity.class));
-                        return true;
+                            replaceFragment(profileFragment);
+                            /*startActivity(new Intent(MainActivity.this, SetupProfileActivity.class));*/
+                            return true;
 
-                    default:
-                        return false;
+                        default:
+                            return false;
 
+                    }
                 }
-            }
-        });
+            });
+        }
 
     }
 

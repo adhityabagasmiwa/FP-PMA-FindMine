@@ -142,7 +142,7 @@
         android:layout_marginTop="96dp"
         android:layout_marginBottom="24dp"
         android:fontFamily="@font/poppins_mbold"
-        android:text="Already have Account?"
+        android:text="Anda sudah punya Akun?"
         android:textColor="@color/colorPrimaryDark"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

@@ -63,12 +63,10 @@ public class IntroActivity extends AppCompatActivity {
         mListItemScreen.add(new ScreenItem("Unggah Barang", "Unggah barang yang anda temukan", R.drawable.slide_02));
         mListItemScreen.add(new ScreenItem("Temukan Barang", "Temukan barang anda yang hilang", R.drawable.slide_03));
 
-
         // Setup viewpager
         screenPager = findViewById(R.id.screenVewPager);
         introViewPagerAdapater = new IntroViewPagerAdapater(this, mListItemScreen);
         screenPager.setAdapter(introViewPagerAdapater);
-
 
         // Setup tab Indicator
         tabIndicator.setupWithViewPager(screenPager);

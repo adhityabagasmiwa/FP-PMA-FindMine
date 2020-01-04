@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Fragment.SearchFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorTextWhite">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/homeToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@color/colorTextWhite"
+            android:minHeight="?attr/actionBarSize"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:theme="?attr/actionBarTheme">
+
+            <EditText
+                android:id="@+id/edtSearchItem"
+                android:layout_width="340dp"
+                android:layout_height="40dp"
+                android:layout_marginEnd="4dp"
+                android:paddingTop="2dp"
+                android:background="@drawable/search_outline"
+                android:ems="10"
+                android:fontFamily="@font/poppins_mbold"
+                android:hint="Cari barang disini..."
+                android:inputType="textPersonName"
+                android:paddingLeft="10dp"
+                android:textColor="@color/colorDesc"
+                android:textSize="14sp" />
+
+            <ImageButton
+                android:id="@+id/btnSearch"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="20dp"
+                android:background="@color/colorTextWhite"
+                android:scaleType="fitXY"
+                android:src="@drawable/icon_search_rounded"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/edtSearchItem"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvPostSearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/appBar"
+        android:layout_marginTop="10dp"
+        tools:listitem="@layout/item_post_search" />
+
+</RelativeLayout>

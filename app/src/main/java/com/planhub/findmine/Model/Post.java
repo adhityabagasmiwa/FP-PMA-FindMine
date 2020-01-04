@@ -3,7 +3,7 @@ package com.planhub.findmine.Model;
 import java.util.Date;
 import com.google.firebase.firestore.ServerTimestamp;
 
-public class Post {
+public class Post extends postId {
 
     private String id_user, title, desc, img_url, img_profile;
     private Date timestamp;

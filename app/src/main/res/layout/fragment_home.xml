@@ -11,29 +11,23 @@
         android:id="@+id/appBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?android:attr/windowBackground">
+        android:background="@color/colorTextWhite">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/homeToolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?attr/colorPrimary"
+            android:layout_gravity="center"
+            android:background="@color/colorTextWhite"
             android:minHeight="?attr/actionBarSize"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
             android:theme="?attr/actionBarTheme">
 
-            <com.mancj.materialsearchbar.MaterialSearchBar
-                android:id="@+id/searchBar"
-                style="@style/MaterialSearchBarLight"
-                android:layout_width="380dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center|top"
-                android:layout_marginTop="4dp"
-                app:mt_hint="Cari barang disini"
-                app:mt_maxSuggestionsCount="10"
-                app:mt_placeholder="Cari barang disini"
-                app:mt_placeholderColor="@color/colorTextPlaceholder"
-                app:mt_searchIconDrawable="@drawable/ic_search"
-                app:mt_speechMode="false" />
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:src="@drawable/logo_findmine_v2" />
 
         </androidx.appcompat.widget.Toolbar>
 
