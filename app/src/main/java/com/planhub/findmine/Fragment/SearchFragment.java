@@ -4,7 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -12,13 +12,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -44,6 +45,7 @@ public class SearchFragment extends Fragment {
     private RecyclerView mResultList;
     private List<Post> searchList;
 
+
     private FirebaseAuth mAuth;
     private FirebaseFirestore firebaseFirestore;
 
@@ -65,11 +67,10 @@ public class SearchFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_search, container, false);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
 
         searchList = new ArrayList<>();
         rvPostSearch = view.findViewById(R.id.rvPostSearch);
-
+        //searchview
         mSearchField = view.findViewById(R.id.edtSearchItem);
         mSearchBtn = view.findViewById(R.id.btnSearch);
 
@@ -81,7 +82,7 @@ public class SearchFragment extends Fragment {
         rvPostSearch.setAdapter(searchAdapter);
         rvPostSearch.setHasFixedSize(true);
 
-        // edit text search
+        // edit text search in Search Fragment
         mSearchField.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -183,7 +184,7 @@ public class SearchFragment extends Fragment {
 
     }
 
-    // filtering title
+    // filtering title in search adapter
     private void filter(String text) {
 
         List<Post> filterTitle = new ArrayList<>();

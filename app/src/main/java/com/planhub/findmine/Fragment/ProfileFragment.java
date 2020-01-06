@@ -1,12 +1,12 @@
 package com.planhub.findmine.Fragment;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -15,6 +15,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,6 +27,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.planhub.findmine.LoginActivity;
 import com.planhub.findmine.MainActivity;
 import com.planhub.findmine.R;
@@ -37,10 +40,12 @@ public class ProfileFragment extends Fragment {
     private String currentUserId;
     private FirebaseFirestore firebaseFirestore;
 
+    private Uri imgProfileURI = null;
+
     private TextView userNameProfile;
     private ImageView userImgProfile;
 
-    // menambah action bar di profile fragment
+    // menambah action bar di profile
     public ActionBar getActionBar() {
         return ((MainActivity) getActivity()).getSupportActionBar();
 
@@ -67,7 +72,6 @@ public class ProfileFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.setting:
-
                 break;
             case R.id.logout:
                 logOut();
@@ -77,6 +81,7 @@ public class ProfileFragment extends Fragment {
         return true;
 
     }
+
 
     public ProfileFragment() {
 
@@ -94,7 +99,6 @@ public class ProfileFragment extends Fragment {
         userNameProfile = view.findViewById(R.id.tvNameProfile);
         userImgProfile = view.findViewById(R.id.imgProfile);
 
-        // init view
         mAuth = FirebaseAuth.getInstance();
         currentUserId = mAuth.getCurrentUser().getUid();
         firebaseFirestore = FirebaseFirestore.getInstance();
@@ -140,6 +144,24 @@ public class ProfileFragment extends Fragment {
     }
 
 
+
+    /*@Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+
+            case R.id.logout:
+                logOut();
+                return true;
+
+            default:
+                return false;
+
+
+        }
+
+    }*/
+
     private void logOut() {
 
         mAuth.signOut();
@@ -153,6 +175,6 @@ public class ProfileFragment extends Fragment {
         startActivity(intent);
 
     }
+
+
 }
-
-
