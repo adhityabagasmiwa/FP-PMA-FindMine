@@ -79,6 +79,7 @@ public class DetailActivity extends AppCompatActivity {
         String postImg = getIntent().getExtras().getString("img_url");
         Glide.with(this).load(postImg).into(imgPostDetail);
 
+        // menampilkan user
         if (mAuth.getCurrentUser() != null) {
 
             firebaseFirestore.collection("Users").document(currentUserId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {

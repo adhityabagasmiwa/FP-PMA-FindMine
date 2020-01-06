@@ -21,6 +21,7 @@ import com.planhub.findmine.DetailActivity;
 import com.planhub.findmine.Model.Post;
 import com.planhub.findmine.R;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -71,6 +72,14 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
     @Override
     public int getItemCount() {
         return searchList.size();
+    }
+
+    // filtering array in search adapter
+    public void filterList(List<Post> filterTitle) {
+
+        this.searchList = filterTitle;
+        notifyDataSetChanged();
+
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
