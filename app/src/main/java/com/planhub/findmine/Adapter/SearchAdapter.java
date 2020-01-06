@@ -21,6 +21,7 @@ import com.planhub.findmine.DetailActivity;
 import com.planhub.findmine.Model.Post;
 import com.planhub.findmine.R;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -49,6 +50,15 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
         return new SearchAdapter.ViewHolder(view);
 
     }
+    // filter array in search adapter
+    public void filterList(List<Post> filterTitle) {
+
+        this.searchList = filterTitle;
+        notifyDataSetChanged();
+
+    }
+
+
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
@@ -125,15 +135,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
 
         }
 
-        /*public void setImgProfile(String imgProfileURI) {
 
-            RequestOptions requestOptions = new RequestOptions();
-            requestOptions.placeholder(R.drawable.placeholder);
-
-            mImgProfile = mView.findViewById(R.id.imgPostSearch);
-            Glide.with(context).applyDefaultRequestOptions(requestOptions).load(imgProfileURI).into(mImgProfile);
-
-        }*/
 
         public void setDescText(String descText) {
 
@@ -149,19 +151,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
 
         }
 
-        /*public void setUserData(String name, String img_profile) {
 
-            userNamePost = mView.findViewById(R.id.tvNameUserPost);
-            userImgPost = mView.findViewById(R.id.imgUserPost);
-
-            userNamePost.setText(name);
-
-            RequestOptions requestOptions = new RequestOptions();
-            requestOptions.placeholder(R.drawable.placeholder);
-            Glide.with(context.getApplicationContext()).applyDefaultRequestOptions(requestOptions).load(img_profile).into(userImgPost);
-
-        }
-*/
 
     }
 }

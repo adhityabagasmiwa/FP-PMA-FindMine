@@ -4,11 +4,17 @@ import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -37,7 +43,8 @@ public class SearchFragment extends Fragment {
 
     private RecyclerView rvPostSearch;
     private RecyclerView mResultList;
-    private List<Post> postList;
+    private List<Post> searchList;
+
 
     private FirebaseAuth mAuth;
     private FirebaseFirestore firebaseFirestore;
@@ -61,30 +68,40 @@ public class SearchFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_search, container, false);
 
-        postList = new ArrayList<>();
+        searchList = new ArrayList<>();
         rvPostSearch = view.findViewById(R.id.rvPostSearch);
-
+        //searchview
         mSearchField = view.findViewById(R.id.edtSearchItem);
         mSearchBtn = view.findViewById(R.id.btnSearch);
 
         mAuth = FirebaseAuth.getInstance();
 
         // mengatur recycler view
-        searchAdapter = new SearchAdapter(postList);
+        searchAdapter = new SearchAdapter(searchList);
         rvPostSearch.setLayoutManager(new LinearLayoutManager(container.getContext()));
         rvPostSearch.setAdapter(searchAdapter);
         rvPostSearch.setHasFixedSize(true);
 
-        /*mSearchBtn.setOnClickListener(new View.OnClickListener() {
+        // edit text search in Search Fragment
+        mSearchField.addTextChangedListener(new TextWatcher() {
             @Override
-            public void onClick(View view) {
-
-                String searchText = mSearchField.getText().toString();
-
-                firebaseSearch(searchText);
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
             }
-        });*/
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+                filter(s.toString());
+
+            }
+        });
+
 
         if (mAuth.getCurrentUser() != null) {
             // menampilkan data pada tabel post di firebase firestore
@@ -120,7 +137,7 @@ public class SearchFragment extends Fragment {
                         if (doc.getType() == DocumentChange.Type.ADDED) {
 
                             Post post = doc.getDocument().toObject(Post.class);
-                            postList.add(post);
+                            searchList.add(post);
 
                             searchAdapter.notifyDataSetChanged();
                         }
@@ -132,34 +149,6 @@ public class SearchFragment extends Fragment {
         }
         return view;
     }
-
-    /*private void firebaseSearch(String searchText) {
-
-        Query query = FirebaseFirestore.getInstance()
-                .collection("Posts")
-                .orderBy("timestamp")
-                .limit(50);
-
-        FirestoreRecyclerAdapter<Post, UsersViewHolder> firestoreRecyclerAdapter = new FirestoreRecyclerAdapter<Post, UsersViewHolder>(Post.class,R.layout.item_post_search,UsersViewHolder.class) {
-            @Override
-            protected void onBindViewHolder(@NonNull UsersViewHolder holder, int position, @NonNull Post model) {
-                holder.setDetails(context, model.getTitle(), model.getDesc(), model.getImg_url());
-
-            }
-
-            @NonNull
-            @Override
-            public UsersViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_post_search, parent, false);
-                context = parent.getContext();
-                firebaseFirestore = FirebaseFirestore.getInstance();
-                return view;
-            }
-        };
-
-        mResultList.setAdapter(firestoreRecyclerAdapter);
-
-    }*/
 
     private void loadMoreQuery() {
 
@@ -181,7 +170,7 @@ public class SearchFragment extends Fragment {
                             if (doc.getType() == DocumentChange.Type.ADDED) {
 
                                 Post post = doc.getDocument().toObject(Post.class);
-                                postList.add(post);
+                                searchList.add(post);
 
                                 searchAdapter.notifyDataSetChanged();
                             }
@@ -195,34 +184,22 @@ public class SearchFragment extends Fragment {
 
     }
 
-    // View Holder Class
+    // filtering title in search adapter
+    private void filter(String text) {
 
-    /*public static class UsersViewHolder extends RecyclerView.ViewHolder {
+        List<Post> filterTitle = new ArrayList<>();
 
-        View mView;
+        for (Post s : searchList) {
 
-        public UsersViewHolder(View itemView) {
-            super(itemView);
+            if (s.getTitle().toLowerCase().contains(text.toLowerCase())) {
 
-            mView = itemView;
+                filterTitle.add(s);
 
+            }
         }
 
-        public void setDetails(Context ctx, String titlePost, String descPost, String imgPostSearch){
+        searchAdapter.filterList(filterTitle);
 
-            TextView title = mView.findViewById(R.id.tvTitleSearch);
-            TextView desc = mView.findViewById(R.id.tvDescSearch);
-            ImageView imgPost = mView.findViewById(R.id.imgPostSearch);
-
-
-            title.setText(titlePost);
-            desc.setText(imgPostSearch);
-
-            Glide.with(ctx).load(imgPostSearch).into(imgPost);
-
-
-        }
-
-    }*/
+    }
 
 }
