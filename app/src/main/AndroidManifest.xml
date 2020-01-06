@@ -15,7 +15,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".DetailActivity"></activity>
+        <activity android:name=".DetailActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.planhub.findmine.MainActivity" />
+        </activity>
         <activity android:name=".SetupProfileActivity" />
         <activity
             android:name=".SplashScreen"

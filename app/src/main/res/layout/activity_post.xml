@@ -59,7 +59,7 @@
             android:id="@+id/imgPost"
             android:layout_width="match_parent"
             android:layout_height="250dp"
-            android:scaleType="centerInside"
+            android:scaleType="centerCrop"
             android:src="@drawable/post_placeholder" />
 
         <EditText

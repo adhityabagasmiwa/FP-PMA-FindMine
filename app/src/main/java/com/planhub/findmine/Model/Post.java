@@ -3,22 +3,31 @@ package com.planhub.findmine.Model;
 import java.util.Date;
 import com.google.firebase.firestore.ServerTimestamp;
 
-public class Post extends postId {
+public class Post extends PostId {
 
-    private String id_user, title, desc, img_url, img_profile;
+    private String id_user, name, title, desc, img_url, img_profile;
     private Date timestamp;
 
     public Post() {
 
     }
 
-    public Post(String id_user, String title, String desc, String img_url, String img_profile, Date timestamp) {
+    public Post(String id_user, String title, String name, String desc, String img_url, String img_profile, Date timestamp) {
         this.id_user = id_user;
+        this.name = name;
         this.title = title;
         this.desc = desc;
         this.img_url = img_url;
         this.timestamp = timestamp;
         this.img_profile = img_profile;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Post(String img_profile) {
