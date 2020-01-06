@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.Window;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -53,6 +54,7 @@ public class PostActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_post);
 
         // Init view
@@ -126,6 +128,9 @@ public class PostActivity extends AppCompatActivity {
                             userMap.put("desc", desc);
                             userMap.put("id_user", idUser);
                             userMap.put("timestamp", FieldValue.serverTimestamp());
+
+                            /*DocumentReference ref = collection("Posts").document();
+                            String myId = ref.getId();*/
 
                             firebaseFirestore.collection("Posts").add(userMap).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                                 @Override

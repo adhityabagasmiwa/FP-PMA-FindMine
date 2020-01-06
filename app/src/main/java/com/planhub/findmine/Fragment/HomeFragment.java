@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -27,6 +29,7 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.planhub.findmine.Adapter.PostAdapter;
 import com.planhub.findmine.Model.Post;
+import com.planhub.findmine.Model.PostId;
 import com.planhub.findmine.Model.User;
 import com.planhub.findmine.R;
 
@@ -60,8 +63,8 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
 
         postList = new ArrayList<>();
         userList = new ArrayList<>();
@@ -111,7 +114,8 @@ public class HomeFragment extends Fragment {
                     for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
                         if (doc.getType() == DocumentChange.Type.ADDED) {
 
-                            Post post = doc.getDocument().toObject(Post.class);
+                            String postId = doc.getDocument().getId();
+                            Post post = doc.getDocument().toObject(Post.class).withId(postId);
                             postList.add(post);
 
                             postAdapter.notifyDataSetChanged();
@@ -149,7 +153,8 @@ public class HomeFragment extends Fragment {
                         for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
                             if (doc.getType() == DocumentChange.Type.ADDED) {
 
-                                Post post = doc.getDocument().toObject(Post.class);
+                                String postId = doc.getDocument().getId();
+                                Post post = doc.getDocument().toObject(Post.class).withId(postId);
                                 postList.add(post);
 
                                 postAdapter.notifyDataSetChanged();

@@ -48,6 +48,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
     }
 
+
     @NonNull
     @Override
     public PostAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -65,8 +66,9 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
         holder.setIsRecyclable(false);
 
-        /*final String PostId = postList.get(position).postId;
-        final String currentUserId = mAuth.getCurrentUser().getUid();*/
+        String postId = postList.get(position).PostId;
+
+        /*final String currentUserId = mAuth.getCurrentUser().getUid();*/
 
         String titleData = postList.get(position).getTitle();
         holder.setTitleText(titleData);
@@ -82,7 +84,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
         // menampilkan user sesuai user id di database Users
         String id_user = postList.get(position).getId_user();
-
         firebaseFirestore.collection("Users").document(id_user).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -93,7 +94,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                     String userImage = task.getResult().getString("img_profile");
 
                     holder.setUserData(userName, userImage);
-
 
                 } else {
 
@@ -149,7 +149,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                     intent.putExtra("title", postList.get(position).getTitle());
                     intent.putExtra("img_url", postList.get(position).getImg_url());
                     intent.putExtra("desc", postList.get(position).getDesc());
-                    /*intent.putExtra("img_profile", userList.get(position).getImgDetailProfile());*/
+                    /*intent.putExtra("name", postList.get(position).getName());
+                    intent.putExtra("img_profile", postList.get(position).getImg_profile());*/
 
                     long millisecond = postList.get(position).getTimestamp().getTime();
                     intent.putExtra("timestamp", millisecond);
