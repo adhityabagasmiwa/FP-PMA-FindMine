@@ -34,10 +34,15 @@
         android:layout_marginTop="16dp"
         android:fontFamily="@font/poppins_mbold"
         android:text="Username"
-        android:textColor="@color/colorTextBlack"
+        android:textColor="@color/colorPrimary"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view3" />
+
+
+ 
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
