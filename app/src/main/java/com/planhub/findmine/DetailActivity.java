@@ -43,6 +43,8 @@ public class DetailActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
     FirebaseFirestore firebaseFirestore;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +60,9 @@ public class DetailActivity extends AppCompatActivity {
         tvDetailDesc = findViewById(R.id.tvDescDetail);
         tvDetailTitle = findViewById(R.id.tvDetailTitle);
         imgPostDetail = findViewById(R.id.imgPostDetail);
+
+
+
         imgDetailUser = findViewById(R.id.imgUserDetail);
 
         postList = new ArrayList<>();

@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
     private String currentUserId;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -11,7 +11,7 @@
         android:layout_height="match_parent"
         app:layout_constraintTop_toBottomOf="@+id/appBar">
 
-        <ImageView
+       <!-- <ImageView
             android:id="@+id/imgPostDetail"
             android:layout_width="match_parent"
             android:layout_height="300dp"
@@ -19,7 +19,18 @@
             android:src="@drawable/post_placeholder"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent" />-->
+
+        <com.github.chrisbanes.photoview.PhotoView
+            android:id="@+id/imgPostDetail"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/post_placeholder"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
 
         <TextView
             android:id="@+id/tvDetailTitle"

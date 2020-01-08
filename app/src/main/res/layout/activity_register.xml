@@ -141,7 +141,7 @@
         android:id="@+id/tvSendLoginActivity"
         android:layout_width="wrap_content"
         android:layout_height="19dp"
-        android:layout_marginTop="96dp"
+        android:layout_marginTop="30dp"
         android:layout_marginBottom="24dp"
         android:fontFamily="@font/poppins_mbold"
         android:text="Anda sudah punya Akun?"
