@@ -58,4 +58,7 @@ dependencies {
     /*Firebase Firestore*/
     implementation 'com.google.firebase:firebase-firestore:17.1.2'
 
+    /*Zoom Image*/
+    implementation 'com.github.chrisbanes:PhotoView:2.3.0'
+
 }

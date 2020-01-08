@@ -32,6 +32,8 @@ import com.google.firebase.storage.StorageReference;
 import com.planhub.findmine.LoginActivity;
 import com.planhub.findmine.MainActivity;
 import com.planhub.findmine.R;
+import com.planhub.findmine.SettingActivity;
+import com.planhub.findmine.SetupProfileActivity;
 
 
 public class ProfileFragment extends Fragment {
@@ -43,6 +45,7 @@ public class ProfileFragment extends Fragment {
     private Uri imgProfileURI = null;
 
     private TextView userNameProfile;
+    private TextView userKelasProfile;
     private ImageView userImgProfile;
 
     // menambah action bar di profile
@@ -72,6 +75,7 @@ public class ProfileFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.setting:
+                setting();
                 break;
             case R.id.logout:
                 logOut();
@@ -97,6 +101,7 @@ public class ProfileFragment extends Fragment {
         getActionBar().setTitle("Profile");
 
         userNameProfile = view.findViewById(R.id.tvNameProfile);
+        userKelasProfile = view.findViewById(R.id.tvKelasProfile);
         userImgProfile = view.findViewById(R.id.imgProfile);
 
         mAuth = FirebaseAuth.getInstance();
@@ -119,6 +124,7 @@ public class ProfileFragment extends Fragment {
                             String img_profile = task.getResult().getString("img_profile");
 
                             userNameProfile.setText(fullname);
+                          userKelasProfile.setText(kelas);
 
                             RequestOptions placeholderReq = new RequestOptions();
                             placeholderReq.placeholder(R.drawable.upload_user_image);
@@ -176,5 +182,10 @@ public class ProfileFragment extends Fragment {
 
     }
 
+    private void setting() {
+
+        Intent intent = new Intent(getActivity(), SettingActivity.class);
+        startActivity(intent);
+    }
 
 }
