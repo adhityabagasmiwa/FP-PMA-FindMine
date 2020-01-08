@@ -49,6 +49,6 @@
         <activity
             android:name=".RegisterActivity"
             android:screenOrientation="portrait" />
-    </application>
+        <activity android:name=".popsnk"/>    </application>
 
 </manifest>

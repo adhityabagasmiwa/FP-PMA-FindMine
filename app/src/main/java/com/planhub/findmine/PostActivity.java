@@ -50,6 +50,8 @@ public class PostActivity extends AppCompatActivity {
 
     private String idUser;
 
+    private TextView textView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +65,15 @@ public class PostActivity extends AppCompatActivity {
         tvPostBtn = findViewById(R.id.tvPost);
         edtPostTitle = findViewById(R.id.edtPostTitle);
         edtPostDesc = findViewById(R.id.edtPostDesc);
+
+        textView=(TextView)findViewById(R.id.snk);
+        textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(PostActivity.this,popsnk.class);
+                startActivity(intent);
+            }
+        });
 
         mAuth = FirebaseAuth.getInstance();
         idUser = mAuth.getCurrentUser().getUid();
