@@ -111,6 +111,21 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvDateDetail" />
 
+<!--        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/sharePict"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            app:backgroundTint="#9F2BEDFF"
+            app:rippleColor="#00FFF8F8"
+            app:srcCompat="@drawable/ic_menu_black_24dp"
+            app:showAsAction="always"
+            tools:layout_editor_absoluteX="339dp"
+            tools:layout_editor_absoluteY="232dp"
+            tools:ignore="MissingConstraints" />-->
+
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.core.widget.NestedScrollView>

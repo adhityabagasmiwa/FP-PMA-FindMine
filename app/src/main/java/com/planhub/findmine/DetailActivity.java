@@ -5,9 +5,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.app.ActionBar;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.text.format.DateFormat;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
@@ -28,6 +36,9 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.planhub.findmine.Adapter.PostAdapter;
 import com.planhub.findmine.Model.Post;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -140,6 +151,64 @@ public class DetailActivity extends AppCompatActivity {
         String dateString = DateFormat.format("MMM d, hh:mm a", calendar).toString();
         return dateString;
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.share_item, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch (item.getItemId()){
+            case R.id.sharePict:
+                shareContent();
+
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void shareContent() {
+        Bitmap bitmap =getBitmapFromView(imgPostDetail);
+        try {
+            File file =new File(this.getExternalCacheDir(),"test.png");
+            FileOutputStream fOut = new FileOutputStream(file);
+            bitmap.compress(Bitmap.CompressFormat.PNG,100,fOut);
+            fOut.flush();
+            fOut.close();
+            file.setReadable(true,false);
+           /* final Intent intent=new Intent(Intent.ACTION_SEND);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.putExtra(Intent.EXTRA_TEXT, String.valueOf(tvDetailTitle));
+            intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
+            intent.setType("image/png");
+            startActivity(Intent.createChooser(intent,"share information via"));*/
+
+           final Intent intent = new Intent(Intent.ACTION_SEND);
+           intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+           intent.putExtra(Intent.EXTRA_TEXT, "judul informasi");
+           intent.putExtra(Intent.EXTRA_STREAM, "gambar barang");
+           intent.setType("image/png");
+           startActivity(Intent.createChooser(intent,"sharethis"));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private Bitmap getBitmapFromView(View view){
+        Bitmap returnedBitmap = Bitmap.createBitmap(view.getWidth(),view.getHeight(),Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(returnedBitmap);
+        Drawable bgDrawable = view.getBackground();
+        if (bgDrawable!=null){
+            bgDrawable.draw(canvas);
+        }else {
+            canvas.drawColor(Color.WHITE);
+        }
+        view.draw(canvas);
+        return returnedBitmap;
     }
 
 }
