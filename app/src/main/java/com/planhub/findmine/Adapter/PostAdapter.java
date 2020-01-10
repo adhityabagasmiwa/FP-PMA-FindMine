@@ -17,6 +17,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.github.siyamed.shapeimageview.mask.PorterShapeImageView;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -34,9 +35,10 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
-    public Context context;
     public List<Post> postList;
     public List<User> userList;
+
+    public Context context;
 
     private FirebaseFirestore firebaseFirestore;
     private FirebaseAuth mAuth;
@@ -47,7 +49,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         this.userList = userList;
 
     }
-
 
     @NonNull
     @Override
@@ -62,13 +63,12 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final PostAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final PostAdapter.ViewHolder holder, final int position) {
 
         holder.setIsRecyclable(false);
 
-        String postId = postList.get(position).PostId;
-
-        /*final String currentUserId = mAuth.getCurrentUser().getUid();*/
+        final String postId = postList.get(position).PostId;
+        String currentUserId = mAuth.getCurrentUser().getUid();
 
         String titleData = postList.get(position).getTitle();
         holder.setTitleText(titleData);
@@ -83,7 +83,16 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         holder.setImgProfile(img_profile);*/
 
         // menampilkan user sesuai user id di database Users
-        String id_user = postList.get(position).getId_user();
+        final String id_user = postList.get(position).getId_user();
+
+        if (id_user.equals(currentUserId)) {
+            holder.btnDeletePost.setEnabled(true);
+            holder.btnDeletePost.setVisibility(View.VISIBLE);
+        }
+
+        /*String userNamePost = userList.get(position).getNameUser();
+        String userImagePost = userList.get(position).getImgDetailProfile();
+        holder.setUserData(userNamePost, userImagePost);*/
         firebaseFirestore.collection("Users").document(id_user).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -104,14 +113,26 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             }
         });
 
-        /*String userName = userList.get(position).getNameUser();
-        String userImage = userList.get(position).getImgDetailProfile();
-
-        holder.setUserData(userName, userImage);*/
-
         long millisecond = postList.get(position).getTimestamp().getTime();
         String dateString = DateFormat.format("MMM d, hh:mm a", new Date(millisecond)).toString();
         holder.setTime(dateString);
+
+        holder.btnDeletePost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                firebaseFirestore.collection("Posts").document(postId).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+
+                        postList.remove(position);
+                        userList.remove(position);
+
+                    }
+                });
+
+            }
+        });
 
     }
 
@@ -128,8 +149,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         private ImageView mImgProfile;
         private PorterShapeImageView mImgPost;
 
-        private TextView userNamePost;
-        private CircleImageView userImgPost;
+        private TextView userName;
+        private CircleImageView userImg;
 
 
         public ViewHolder(@NonNull View itemView) {
@@ -143,8 +164,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                 @Override
                 public void onClick(View v) {
 
-                    Intent intent = new Intent(context, DetailActivity.class);
-                    int position = getAdapterPosition();
+                    final Intent intent = new Intent(context, DetailActivity.class);
+                    final int position = getAdapterPosition();
 
                     intent.putExtra("title", postList.get(position).getTitle());
                     intent.putExtra("img_url", postList.get(position).getImg_url());
@@ -154,7 +175,32 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
                     long millisecond = postList.get(position).getTimestamp().getTime();
                     intent.putExtra("timestamp", millisecond);
+
                     context.startActivity(intent);
+
+                    /*String id_user = postList.get(position).getId_user();
+                    firebaseFirestore.collection("Users").document(id_user).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+
+                            if (task.isSuccessful()) {
+
+                                String userNamePost = task.getResult().getString("name");
+                                String userImagePost = task.getResult().getString("img_profile");
+
+                                setUserData(userNamePost, userImagePost);
+
+                                intent.putExtra("name", postList.get(position).getName());
+                                intent.putExtra("img_profile", postList.get(position).getImg_profile());
+
+                                context.startActivity(intent);
+
+                            } else  {
+
+                            }
+
+                        }
+                    });*/
 
                 }
             });
@@ -187,14 +233,14 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
         public void setUserData(String name, String img_profile) {
 
-            userNamePost = mView.findViewById(R.id.tvNameUserPost);
-            userImgPost = mView.findViewById(R.id.imgUserPost);
+            userName = mView.findViewById(R.id.tvNameUserPost);
+            userImg = mView.findViewById(R.id.imgUserPost);
 
-            userNamePost.setText(name);
+            userName.setText(name);
 
             RequestOptions requestOptions = new RequestOptions();
             requestOptions.placeholder(R.drawable.placeholder);
-            Glide.with(context).applyDefaultRequestOptions(requestOptions).load(img_profile).into(userImgPost);
+            Glide.with(context).applyDefaultRequestOptions(requestOptions).load(img_profile).into(userImg);
 
         }
     }

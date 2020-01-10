@@ -6,8 +6,6 @@ import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,7 +19,6 @@ import com.planhub.findmine.DetailActivity;
 import com.planhub.findmine.Model.Post;
 import com.planhub.findmine.R;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -50,6 +47,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
         return new SearchAdapter.ViewHolder(view);
 
     }
+
     // filter array in search adapter
     public void filterList(List<Post> filterTitle) {
 
@@ -57,8 +55,6 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
         notifyDataSetChanged();
 
     }
-
-
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
@@ -81,14 +77,6 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
     @Override
     public int getItemCount() {
         return searchList.size();
-    }
-
-    // filtering array in search adapter
-    public void filterList(List<Post> filterTitle) {
-
-        this.searchList = filterTitle;
-        notifyDataSetChanged();
-
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -144,7 +132,6 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
         }
 
 
-
         public void setDescText(String descText) {
 
             mDesc = mView.findViewById(R.id.tvDescSearch);
@@ -158,8 +145,6 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
             mDate.setText(date);
 
         }
-
-
 
     }
 }

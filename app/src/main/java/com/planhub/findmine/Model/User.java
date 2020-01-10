@@ -2,7 +2,7 @@ package com.planhub.findmine.Model;
 
 public class User {
 
-    public String  imgDetailProfile, nameUser;
+    public String imgDetailProfile, nameUser;
 
     public User() {
 

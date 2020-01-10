@@ -17,11 +17,14 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.planhub.findmine.Adapter.PostAdapter;
 import com.planhub.findmine.Model.Post;
 
@@ -44,7 +47,6 @@ public class DetailActivity extends AppCompatActivity {
     FirebaseFirestore firebaseFirestore;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,8 +62,6 @@ public class DetailActivity extends AppCompatActivity {
         tvDetailDesc = findViewById(R.id.tvDescDetail);
         tvDetailTitle = findViewById(R.id.tvDetailTitle);
         imgPostDetail = findViewById(R.id.imgPostDetail);
-
-
 
         imgDetailUser = findViewById(R.id.imgUserDetail);
 
@@ -84,29 +84,42 @@ public class DetailActivity extends AppCompatActivity {
         String postImg = getIntent().getExtras().getString("img_url");
         Glide.with(this).load(postImg).into(imgPostDetail);
 
+        String userName = getIntent().getExtras().getString("name");
+        tvDetailUsername.setText(userName);
+
+        String userImgProfile = getIntent().getExtras().getString("img_profile");
+        Glide.with(this).load(userImgProfile).into(imgDetailUser);
+
+        getData(userImgProfile);
+
         // menampilkan user
-        if (mAuth.getCurrentUser() != null) {
+        firebaseFirestore.collection("Posts").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
 
-            firebaseFirestore.collection("Users").document(currentUserId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
 
-                    if (task.isSuccessful()) {
+                    DocumentReference documentReference = firebaseFirestore.collection("Users").document(currentUserId);
+                    documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                        @Override
+                        public void onSuccess(DocumentSnapshot documentSnapshot) {
 
-                        String fullname = task.getResult().getString("name");
-                        String kelas = task.getResult().getString("kelas");
-                        String img_profile = task.getResult().getString("img_profile");
+                            String fullname = documentSnapshot.getString("name");
+                            String kelas = documentSnapshot.getString("kelas");
+                            String img_profile = documentSnapshot.getString("img_profile");
 
-                        tvDetailUsername.setText(fullname);
+                            tvDetailUsername.setText(fullname);
 
-                        getData(img_profile);
+                            getData(img_profile);
 
-                    }
+                        }
+                    });
+
+                } else {
 
                 }
-            });
-
-        }
+            }
+        });
     }
 
 

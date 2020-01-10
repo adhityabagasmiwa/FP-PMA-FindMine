@@ -52,7 +52,8 @@ public class HomeFragment extends Fragment {
 
     private PostAdapter postAdapter;
 
-    private static final String TAG = "HomeFragment";
+    private Boolean isFirstPageFirstLoad = true;
+
 
     public HomeFragment() {
         // Required empty public constructor
@@ -90,7 +91,7 @@ public class HomeFragment extends Fragment {
                 public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                     super.onScrolled(recyclerView, dx, dy);
 
-                    Boolean reachedBottom = !recyclerView.canScrollVertically(-1);
+                    Boolean reachedBottom = !recyclerView.canScrollVertically(1);
 
                     if (reachedBottom) {
 
@@ -108,19 +109,56 @@ public class HomeFragment extends Fragment {
                 @Override
                 public void onEvent(QuerySnapshot queryDocumentSnapshots, final FirebaseFirestoreException e) {
 
-                    lastVisibe = queryDocumentSnapshots.getDocuments().get(queryDocumentSnapshots.size() - 1);
+                    if (!queryDocumentSnapshots.isEmpty()) {
 
-                    // menampilkan jika hanya ada data di database
-                    for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
-                        if (doc.getType() == DocumentChange.Type.ADDED) {
+                        if (isFirstPageFirstLoad) {
 
-                            String postId = doc.getDocument().getId();
-                            Post post = doc.getDocument().toObject(Post.class).withId(postId);
-                            postList.add(post);
-
-                            postAdapter.notifyDataSetChanged();
+                            lastVisibe = queryDocumentSnapshots.getDocuments().get(queryDocumentSnapshots.size() - 1);
+                            postList.clear();
+                            userList.clear();
 
                         }
+
+                        // menampilkan jika hanya ada data di database
+                        for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
+
+                            if (doc.getType() == DocumentChange.Type.ADDED) {
+
+                                String postId = doc.getDocument().getId();
+                                final Post post = doc.getDocument().toObject(Post.class).withId(postId);
+
+                                String userId = doc.getDocument().getString("id_user");
+                                firebaseFirestore.collection("Users").document(userId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+
+                                        if (task.isSuccessful()) {
+
+                                            User user = task.getResult().toObject(User.class);
+
+                                            if (isFirstPageFirstLoad) {
+                                                userList.add(user);
+                                                postList.add(post);
+
+                                            } else {
+
+                                                userList.add(0, user);
+                                                postList.add(0, post);
+
+                                            }
+
+                                            postAdapter.notifyDataSetChanged();
+
+                                        }
+
+                                    }
+                                });
+
+                            }
+
+                        }
+
+                        isFirstPageFirstLoad = false;
 
                     }
 
@@ -150,14 +188,31 @@ public class HomeFragment extends Fragment {
                     if (!queryDocumentSnapshots.isEmpty()) {
                         // menampilkan jika hanya ada data di database
                         lastVisibe = queryDocumentSnapshots.getDocuments().get(queryDocumentSnapshots.size() - 1);
+
                         for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
+
                             if (doc.getType() == DocumentChange.Type.ADDED) {
 
                                 String postId = doc.getDocument().getId();
-                                Post post = doc.getDocument().toObject(Post.class).withId(postId);
-                                postList.add(post);
+                                final Post post = doc.getDocument().toObject(Post.class).withId(postId);
 
-                                postAdapter.notifyDataSetChanged();
+                                String userId = doc.getDocument().getString("id_user");
+                                firebaseFirestore.collection("Users").document(userId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+
+                                        if (task.isSuccessful()) {
+
+                                            User user = task.getResult().toObject(User.class);
+                                            userList.add(user);
+                                            postList.add(post);
+
+                                            postAdapter.notifyDataSetChanged();
+
+                                        }
+
+                                    }
+                                });
                             }
 
                         }

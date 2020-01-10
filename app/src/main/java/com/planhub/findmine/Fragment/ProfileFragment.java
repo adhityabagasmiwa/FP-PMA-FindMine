@@ -8,6 +8,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -25,15 +27,25 @@ import com.bumptech.glide.request.RequestOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.planhub.findmine.Adapter.SearchAdapter;
 import com.planhub.findmine.LoginActivity;
 import com.planhub.findmine.MainActivity;
+import com.planhub.findmine.Model.Post;
 import com.planhub.findmine.R;
 import com.planhub.findmine.SettingActivity;
 import com.planhub.findmine.SetupProfileActivity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class ProfileFragment extends Fragment {
@@ -109,7 +121,7 @@ public class ProfileFragment extends Fragment {
         firebaseFirestore = FirebaseFirestore.getInstance();
 
         // menampilkan detail profile
-        if (mAuth.getCurrentUser() != null) {
+        if (currentUserId != null) {
 
             firebaseFirestore.collection("Users").document(currentUserId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                 @Override
@@ -124,7 +136,7 @@ public class ProfileFragment extends Fragment {
                             String img_profile = task.getResult().getString("img_profile");
 
                             userNameProfile.setText(fullname);
-                          userKelasProfile.setText(kelas);
+                            userKelasProfile.setText(kelas);
 
                             RequestOptions placeholderReq = new RequestOptions();
                             placeholderReq.placeholder(R.drawable.upload_user_image);
@@ -149,24 +161,6 @@ public class ProfileFragment extends Fragment {
 
     }
 
-
-
-    /*@Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        switch (item.getItemId()) {
-
-            case R.id.logout:
-                logOut();
-                return true;
-
-            default:
-                return false;
-
-
-        }
-
-    }*/
 
     private void logOut() {
 
