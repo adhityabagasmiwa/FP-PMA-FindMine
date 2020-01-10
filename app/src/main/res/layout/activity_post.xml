@@ -87,6 +87,8 @@
             android:layout_height="wrap_content"
             android:text="Postingan sesuai dengan" />
 
+
+
         <TextView
             android:id="@+id/snk"
             android:layout_width="match_parent"

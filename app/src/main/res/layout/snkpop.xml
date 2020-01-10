@@ -5,10 +5,11 @@
     android:background="#00D33030">
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_centerInParent="true"
-        android:background="#00C52B2B"
+        android:gravity="center"
+        android:background="#F5DE0F"
         android:orientation="vertical">
 
         <TextView
@@ -23,7 +24,7 @@
             android:id="@+id/textView3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="  Postingan harus sesuai dengan yang tertulis dibawah \n
+            android:text="      Postingan harus sesuai dengan yang tertulis dibawah \n
             1. Tidak boleh mengiklankan produk \n
             2. Barang yang ditemukan di tempatkan ke \n
             satpam atau ruang pengajaran \n
